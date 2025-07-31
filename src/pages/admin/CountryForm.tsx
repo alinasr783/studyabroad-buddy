@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { ArrowLeft } from "lucide-react";
+import ImageUpload from "@/components/ui/ImageUpload";
 
 const CountryForm = () => {
   const { id } = useParams();
@@ -179,12 +180,11 @@ const CountryForm = () => {
               </div>
               
               <div>
-                <label className="text-sm font-medium">رابط الصورة</label>
-                <Input
-                  value={formData.image_url}
-                  onChange={(e) => setFormData({...formData, image_url: e.target.value})}
-                  placeholder="https://example.com/image.jpg"
-                  required
+                <label className="text-sm font-medium">صورة الدولة</label>
+                <ImageUpload
+                  bucket="countries"
+                  onUpload={(url) => setFormData({...formData, image_url: url})}
+                  currentImage={formData.image_url}
                 />
               </div>
               

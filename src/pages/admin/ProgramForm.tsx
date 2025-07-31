@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 import { ArrowLeft } from "lucide-react";
+import ImageUpload from "@/components/ui/ImageUpload";
 
 interface University {
   id: string;
@@ -242,12 +243,11 @@ const ProgramForm = () => {
               </div>
               
               <div>
-                <label className="text-sm font-medium">رابط الصورة</label>
-                <Input
-                  value={formData.image_url}
-                  onChange={(e) => setFormData({...formData, image_url: e.target.value})}
-                  placeholder="https://example.com/image.jpg"
-                  required
+                <label className="text-sm font-medium">صورة البرنامج</label>
+                <ImageUpload
+                  bucket="programs"
+                  onUpload={(url) => setFormData({...formData, image_url: url})}
+                  currentImage={formData.image_url}
                 />
               </div>
               
