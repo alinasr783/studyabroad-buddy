@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
+import ImageUpload from "@/components/ui/ImageUpload";
 import { Phone, Mail, MessageCircle, Globe, Palette } from "lucide-react";
 
 interface SiteSettings {

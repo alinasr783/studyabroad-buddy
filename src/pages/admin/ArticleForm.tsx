@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { ArrowLeft } from "lucide-react";
+import ImageUpload from "@/components/ui/ImageUpload";
+import RichTextEditor from "@/components/ui/RichTextEditor";
 
 const ArticleForm = () => {
   const { id } = useParams();
@@ -181,34 +183,30 @@ const ArticleForm = () => {
               
               <div>
                 <label className="text-sm font-medium">المحتوى بالإنجليزية</label>
-                <Textarea
+                <RichTextEditor
                   value={formData.content_en}
-                  onChange={(e) => setFormData({...formData, content_en: e.target.value})}
-                  rows={8}
+                  onChange={(value) => setFormData({...formData, content_en: value})}
                   placeholder="محتوى المقال الكامل..."
-                  required
                 />
               </div>
               
               <div>
                 <label className="text-sm font-medium">المحتوى بالعربية</label>
-                <Textarea
+                <RichTextEditor
                   value={formData.content_ar}
-                  onChange={(e) => setFormData({...formData, content_ar: e.target.value})}
-                  rows={8}
+                  onChange={(value) => setFormData({...formData, content_ar: value})}
                   placeholder="محتوى المقال الكامل..."
-                  required
                 />
               </div>
               
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium">رابط الصورة</label>
-                  <Input
-                    value={formData.image_url}
-                    onChange={(e) => setFormData({...formData, image_url: e.target.value})}
-                    placeholder="https://example.com/image.jpg"
-                    required
+                  <label className="text-sm font-medium">صورة المقال</label>
+                  <ImageUpload
+                    bucket="articles"
+                    currentImage={formData.image_url}
+                    onUpload={(url) => setFormData({...formData, image_url: url})}
+                    maxSize={5}
                   />
                 </div>
                 <div>
