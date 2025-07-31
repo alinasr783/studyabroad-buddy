@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import heroBg from "@/assets/hero-bg.jpg";
+import heroBg from "@/assets/hero-bg-new.jpg";
 import usaLandmark from "@/assets/usa-landmark.jpg";
 import canadaLandmark from "@/assets/canada-landmark.jpg";
 import ukLandmark from "@/assets/uk-landmark.jpg";

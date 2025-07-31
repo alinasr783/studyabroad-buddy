@@ -22,6 +22,8 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import CountriesManagement from "@/components/admin/CountriesManagement";
 import UniversitiesManagement from "@/components/admin/UniversitiesManagement";
+import ProgramsManagement from "@/components/admin/ProgramsManagement";
+import ArticlesManagement from "@/components/admin/ArticlesManagement";
 import SiteSettings from "@/components/admin/SiteSettings";
 
 interface DashboardStats {
@@ -365,25 +367,11 @@ const AdminDashboard = () => {
           </TabsContent>
 
           <TabsContent value="programs" className="space-y-4">
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold">إدارة البرامج</h2>
-              <Button>
-                <Plus className="w-4 h-4 mr-2" />
-                إضافة برنامج جديد
-              </Button>
-            </div>
-            <p className="text-muted-foreground">قريباً: إدارة البرامج الدراسية</p>
+            <ProgramsManagement />
           </TabsContent>
 
           <TabsContent value="articles" className="space-y-4">
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold">إدارة المقالات</h2>
-              <Button>
-                <Plus className="w-4 h-4 mr-2" />
-                إضافة مقال جديد
-              </Button>
-            </div>
-            <p className="text-muted-foreground">قريباً: إدارة المقالات والأخبار</p>
+            <ArticlesManagement />
           </TabsContent>
 
           <TabsContent value="settings" className="space-y-4">

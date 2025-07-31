@@ -17,6 +17,10 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
 import AdminDashboard from "./pages/AdminDashboard";
+import CountryForm from "./pages/admin/CountryForm";
+import UniversityForm from "./pages/admin/UniversityForm";
+import ProgramForm from "./pages/admin/ProgramForm";
+import ArticleForm from "./pages/admin/ArticleForm";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -42,6 +46,14 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/countries/add" element={<CountryForm />} />
+          <Route path="/admin/countries/edit/:id" element={<CountryForm />} />
+          <Route path="/admin/universities/add" element={<UniversityForm />} />
+          <Route path="/admin/universities/edit/:id" element={<UniversityForm />} />
+          <Route path="/admin/programs/add" element={<ProgramForm />} />
+          <Route path="/admin/programs/edit/:id" element={<ProgramForm />} />
+          <Route path="/admin/articles/add" element={<ArticleForm />} />
+          <Route path="/admin/articles/edit/:id" element={<ArticleForm />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
