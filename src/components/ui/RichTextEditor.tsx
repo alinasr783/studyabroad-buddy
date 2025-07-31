@@ -107,7 +107,7 @@ const RichTextEditor = ({
           '--ql-primary': 'hsl(var(--primary))',
         } as React.CSSProperties}
       />
-      <style jsx>{`
+      <style>{`
         .ql-toolbar {
           border-top: 1px solid hsl(var(--border)) !important;
           border-left: 1px solid hsl(var(--border)) !important;

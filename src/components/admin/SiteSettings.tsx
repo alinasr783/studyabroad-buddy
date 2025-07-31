@@ -12,6 +12,9 @@ interface SiteSettings {
   id?: string;
   site_name: string;
   site_logo: string;
+  hero_image: string;
+  about_image: string;
+  contact_image: string;
   phone: string;
   email: string;
   whatsapp: string;
@@ -26,6 +29,9 @@ const SiteSettings = () => {
   const [settings, setSettings] = useState<SiteSettings>({
     site_name: "StudyWay",
     site_logo: "",
+    hero_image: "",
+    about_image: "",
+    contact_image: "",
     phone: "",
     email: "",
     whatsapp: "",
@@ -55,7 +61,21 @@ const SiteSettings = () => {
       }
 
       if (data) {
-        setSettings(data);
+        setSettings({
+          site_name: data.site_name || "StudyWay",
+          site_logo: data.site_logo || "",
+          hero_image: data.hero_image || "",
+          about_image: data.about_image || "",
+          contact_image: data.contact_image || "",
+          phone: data.phone || "",
+          email: data.email || "",
+          whatsapp: data.whatsapp || "",
+          address: data.address || "",
+          about_description: data.about_description || "",
+          primary_color: data.primary_color || "#3B82F6",
+          secondary_color: data.secondary_color || "#10B981",
+          accent_color: data.accent_color || "#F59E0B"
+        });
       }
     } catch (error) {
       console.error('Error fetching settings:', error);
@@ -140,11 +160,12 @@ const SiteSettings = () => {
               />
             </div>
             <div>
-              <label className="text-sm font-medium">رابط الشعار</label>
-              <Input
-                value={settings.site_logo}
-                onChange={(e) => setSettings({...settings, site_logo: e.target.value})}
-                placeholder="https://example.com/logo.png"
+              <label className="text-sm font-medium">شعار الموقع</label>
+              <ImageUpload
+                bucket="articles"
+                currentImage={settings.site_logo}
+                onUpload={(url) => setSettings({...settings, site_logo: url})}
+                maxSize={2}
               />
             </div>
             <div>
@@ -210,6 +231,46 @@ const SiteSettings = () => {
                 placeholder="العنوان الكامل للمكتب..."
                 rows={3}
               />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Static Images */}
+        <Card className="md:col-span-2">
+          <CardHeader>
+            <CardTitle>الصور الثابتة</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className="text-sm font-medium">صورة الخلفية الرئيسية</label>
+                <ImageUpload
+                  bucket="articles"
+                  currentImage={settings.hero_image}
+                  onUpload={(url) => setSettings({...settings, hero_image: url})}
+                  maxSize={10}
+                />
+              </div>
+              
+              <div>
+                <label className="text-sm font-medium">صورة صفحة من نحن</label>
+                <ImageUpload
+                  bucket="articles"
+                  currentImage={settings.about_image}
+                  onUpload={(url) => setSettings({...settings, about_image: url})}
+                  maxSize={5}
+                />
+              </div>
+              
+              <div>
+                <label className="text-sm font-medium">صورة صفحة التواصل</label>
+                <ImageUpload
+                  bucket="articles"
+                  currentImage={settings.contact_image}
+                  onUpload={(url) => setSettings({...settings, contact_image: url})}
+                  maxSize={5}
+                />
+              </div>
             </div>
           </CardContent>
         </Card>

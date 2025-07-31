@@ -291,10 +291,13 @@ export type Database = {
       site_settings: {
         Row: {
           about_description: string | null
+          about_image: string | null
           accent_color: string | null
           address: string | null
+          contact_image: string | null
           created_at: string
           email: string | null
+          hero_image: string | null
           id: string
           phone: string | null
           primary_color: string | null
@@ -306,10 +309,13 @@ export type Database = {
         }
         Insert: {
           about_description?: string | null
+          about_image?: string | null
           accent_color?: string | null
           address?: string | null
+          contact_image?: string | null
           created_at?: string
           email?: string | null
+          hero_image?: string | null
           id?: string
           phone?: string | null
           primary_color?: string | null
@@ -321,10 +327,13 @@ export type Database = {
         }
         Update: {
           about_description?: string | null
+          about_image?: string | null
           accent_color?: string | null
           address?: string | null
+          contact_image?: string | null
           created_at?: string
           email?: string | null
+          hero_image?: string | null
           id?: string
           phone?: string | null
           primary_color?: string | null
