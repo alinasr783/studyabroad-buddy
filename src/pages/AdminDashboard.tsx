@@ -20,6 +20,9 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
+import CountriesManagement from "@/components/admin/CountriesManagement";
+import UniversitiesManagement from "@/components/admin/UniversitiesManagement";
+import SiteSettings from "@/components/admin/SiteSettings";
 
 interface DashboardStats {
   countries: number;
@@ -354,25 +357,11 @@ const AdminDashboard = () => {
           </TabsContent>
 
           <TabsContent value="countries" className="space-y-4">
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold">إدارة الدول</h2>
-              <Button>
-                <Plus className="w-4 h-4 mr-2" />
-                إضافة دولة جديدة
-              </Button>
-            </div>
-            <p className="text-muted-foreground">قريباً: إدارة الدول المتاحة للدراسة</p>
+            <CountriesManagement />
           </TabsContent>
 
           <TabsContent value="universities" className="space-y-4">
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold">إدارة الجامعات</h2>
-              <Button>
-                <Plus className="w-4 h-4 mr-2" />
-                إضافة جامعة جديدة
-              </Button>
-            </div>
-            <p className="text-muted-foreground">قريباً: إدارة الجامعات المتاحة</p>
+            <UniversitiesManagement />
           </TabsContent>
 
           <TabsContent value="programs" className="space-y-4">
@@ -398,28 +387,7 @@ const AdminDashboard = () => {
           </TabsContent>
 
           <TabsContent value="settings" className="space-y-4">
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold">إعدادات الموقع</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>الإعدادات العامة</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">قريباً: تحديث اسم الموقع والشعار والألوان</p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>معلومات الاتصال</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">قريباً: تحديث بيانات التواصل</p>
-                </CardContent>
-              </Card>
-            </div>
+            <SiteSettings />
           </TabsContent>
         </Tabs>
       </div>
