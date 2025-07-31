@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      admins: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          name: string | null
+          password: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          name?: string | null
+          password: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string | null
+          password?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       applications: {
         Row: {
           created_at: string | null

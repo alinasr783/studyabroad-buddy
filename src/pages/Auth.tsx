@@ -19,33 +19,31 @@ const Auth = () => {
     setLoading(true);
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
+      // Check credentials against admins table
+      const { data: admin, error } = await supabase
+        .from('admins')
+        .select('*')
+        .eq('email', email)
+        .eq('password', password)
+        .single();
+
+      if (error || !admin) {
+        throw new Error('بيانات تسجيل الدخول غير صحيحة');
+      }
+
+      // Store admin info in localStorage for session management
+      localStorage.setItem('admin_session', JSON.stringify({
+        id: admin.id,
+        email: admin.email,
+        name: admin.name
+      }));
+
+      toast({
+        title: "تم تسجيل الدخول بنجاح",
+        description: `مرحباً بك ${admin.name || 'مدير'}`
       });
 
-      if (error) throw error;
-
-      if (data.user) {
-        // Check if user is admin
-        const { data: profile, error: profileError } = await supabase
-          .from('profiles')
-          .select('role')
-          .eq('id', data.user.id)
-          .single();
-
-        if (profileError || profile?.role !== 'admin') {
-          await supabase.auth.signOut();
-          throw new Error('غير مسموح لك بالوصول لهذه الصفحة');
-        }
-
-        toast({
-          title: "تم تسجيل الدخول بنجاح",
-          description: "مرحباً بك في لوحة التحكم"
-        });
-
-        navigate('/admin');
-      }
+      navigate('/admin');
     } catch (error: any) {
       console.error('Login error:', error);
       toast({

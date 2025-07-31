@@ -61,25 +61,30 @@ const AdminDashboard = () => {
 
   const checkAuth = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const adminSession = localStorage.getItem('admin_session');
       
-      if (!user) {
+      if (!adminSession) {
         navigate('/auth');
         return;
       }
 
-      const { data: profile, error } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', user.id)
+      const admin = JSON.parse(adminSession);
+      
+      // Verify admin still exists in database
+      const { data: adminData, error } = await supabase
+        .from('admins')
+        .select('*')
+        .eq('id', admin.id)
         .single();
 
-      if (error || profile?.role !== 'admin') {
+      if (error || !adminData) {
+        localStorage.removeItem('admin_session');
         navigate('/auth');
         return;
       }
     } catch (error) {
       console.error('Auth check error:', error);
+      localStorage.removeItem('admin_session');
       navigate('/auth');
     }
   };
@@ -121,7 +126,7 @@ const AdminDashboard = () => {
 
   const handleLogout = async () => {
     try {
-      await supabase.auth.signOut();
+      localStorage.removeItem('admin_session');
       toast({
         title: "تم تسجيل الخروج بنجاح",
         description: "نراك قريباً"
