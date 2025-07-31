@@ -18,8 +18,8 @@ interface University {
   image_url: string;
   country_id: string;
   ranking: number;
-  students_count: number;
-  website: string;
+  students_count: string;
+  website_url: string;
   featured: boolean;
 }
 
@@ -45,8 +45,8 @@ const UniversitiesManagement = () => {
     image_url: "",
     country_id: "",
     ranking: 0,
-    students_count: 0,
-    website: "",
+    students_count: "",
+    website_url: "",
     featured: false
   });
 
@@ -171,8 +171,8 @@ const UniversitiesManagement = () => {
       image_url: "",
       country_id: "",
       ranking: 0,
-      students_count: 0,
-      website: "",
+      students_count: "",
+      website_url: "",
       featured: false
     });
     setEditingUniversity(null);
@@ -189,7 +189,7 @@ const UniversitiesManagement = () => {
       country_id: university.country_id,
       ranking: university.ranking,
       students_count: university.students_count,
-      website: university.website,
+      website_url: university.website_url,
       featured: university.featured
     });
     setShowDialog(true);
@@ -293,9 +293,8 @@ const UniversitiesManagement = () => {
                 <div>
                   <label className="text-sm font-medium">عدد الطلاب</label>
                   <Input
-                    type="number"
                     value={formData.students_count}
-                    onChange={(e) => setFormData({...formData, students_count: parseInt(e.target.value)})}
+                    onChange={(e) => setFormData({...formData, students_count: e.target.value})}
                     required
                   />
                 </div>
@@ -303,8 +302,8 @@ const UniversitiesManagement = () => {
                   <label className="text-sm font-medium">موقع الجامعة</label>
                   <Input
                     type="url"
-                    value={formData.website}
-                    onChange={(e) => setFormData({...formData, website: e.target.value})}
+                    value={formData.website_url}
+                    onChange={(e) => setFormData({...formData, website_url: e.target.value})}
                     required
                   />
                 </div>
@@ -357,8 +356,8 @@ const UniversitiesManagement = () => {
               <p className="text-sm mb-2">{university.description_ar.substring(0, 100)}...</p>
               <div className="text-xs text-muted-foreground space-y-1">
                 <p>التصنيف: #{university.ranking}</p>
-                <p>عدد الطلاب: {university.students_count.toLocaleString()}</p>
-                <p>الموقع: <a href={university.website} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">{university.website}</a></p>
+                <p>عدد الطلاب: {university.students_count}</p>
+                <p>الموقع: <a href={university.website_url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">{university.website_url}</a></p>
               </div>
             </CardContent>
           </Card>

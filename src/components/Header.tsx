@@ -22,18 +22,16 @@ const Header = () => {
     try {
       const { data, error } = await supabase
         .from('site_settings')
-        .select('*')
-        .in('key', ['site_name', 'site_logo']);
+        .select('site_name, site_logo')
+        .maybeSingle();
 
       if (error) throw error;
 
-      if (data && data.length > 0) {
-        const settings = data.reduce((acc, setting) => {
-          acc[setting.key] = setting.value_ar || setting.value_en;
-          return acc;
-        }, {} as SiteSettings);
-
-        setSiteSettings(settings);
+      if (data) {
+        setSiteSettings({
+          site_name: data.site_name || 'StudyWay',
+          site_logo: data.site_logo || ''
+        });
       }
     } catch (error) {
       console.error('Error fetching site settings:', error);

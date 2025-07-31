@@ -33,19 +33,18 @@ const Contact = () => {
     try {
       const { data, error } = await supabase
         .from('site_settings')
-        .select('*')
-        .in('key', ['contact_phone', 'contact_email', 'contact_address', 'contact_whatsapp']);
+        .select('phone, email, address, whatsapp')
+        .maybeSingle();
 
       if (error) throw error;
 
-      if (data && data.length > 0) {
-        const settings = data.reduce((acc, setting) => {
-          const key = setting.key.replace('contact_', '');
-          acc[key] = setting.value_ar || setting.value_en;
-          return acc;
-        }, {} as ContactInfo);
-
-        setContactInfo(settings);
+      if (data) {
+        setContactInfo({
+          phone: data.phone || '',
+          email: data.email || '',
+          address: data.address || '',
+          whatsapp: data.whatsapp || ''
+        });
       }
     } catch (error) {
       console.error('Error fetching contact info:', error);

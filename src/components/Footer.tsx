@@ -27,31 +27,31 @@ const Footer = () => {
     try {
       const { data, error } = await supabase
         .from('site_settings')
-        .select('*')
-        .in('key', [
-          'contact_phone', 'contact_email', 'contact_address', 'contact_whatsapp',
-          'site_name', 'site_description'
-        ]);
+        .select('phone, email, address, whatsapp')
+        .maybeSingle();
 
       if (error) throw error;
 
-      if (data && data.length > 0) {
-        const settings = data.reduce((acc, setting) => {
-          acc[setting.key] = setting.value_ar || setting.value_en;
-          return acc;
-        }, {} as Record<string, string>);
-
+      if (data) {
         setContactInfo({
-          phone: settings.contact_phone,
-          email: settings.contact_email,
-          address: settings.contact_address,
-          whatsapp: settings.contact_whatsapp
+          phone: data.phone || '',
+          email: data.email || '',
+          address: data.address || '',
+          whatsapp: data.whatsapp || ''
         });
 
-        setSiteSettings({
-          site_name: settings.site_name,
-          site_description: settings.site_description
-        });
+        // Also fetch site name for the footer
+        const { data: siteData } = await supabase
+          .from('site_settings')
+          .select('site_name')
+          .maybeSingle();
+
+        if (siteData) {
+          setSiteSettings({
+            site_name: siteData.site_name || 'StudyWay',
+            site_description: 'منصتك الموثوقة للدراسة في أفضل الجامعات العالمية'
+          });
+        }
       }
     } catch (error) {
       console.error('Error fetching footer data:', error);

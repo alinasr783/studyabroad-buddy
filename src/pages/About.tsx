@@ -17,22 +17,17 @@ const About = () => {
     try {
       const { data, error } = await supabase
         .from('site_settings')
-        .select('*')
-        .in('key', ['about_title', 'about_description', 'about_mission', 'about_vision']);
+        .select('about_description')
+        .maybeSingle();
 
       if (error) throw error;
 
-      if (data && data.length > 0) {
-        const settings = data.reduce((acc, setting) => {
-          acc[setting.key] = setting.value_ar || setting.value_en;
-          return acc;
-        }, {} as Record<string, string>);
-
+      if (data) {
         setContent({
-          title: settings.about_title || content.title,
-          description: settings.about_description || content.description,
-          mission: settings.about_mission || content.mission,
-          vision: settings.about_vision || content.vision
+          title: "من نحن",
+          description: data.about_description || content.description,
+          mission: content.mission,
+          vision: content.vision
         });
       }
     } catch (error) {

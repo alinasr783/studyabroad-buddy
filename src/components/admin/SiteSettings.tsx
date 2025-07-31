@@ -47,9 +47,9 @@ const SiteSettings = () => {
       const { data, error } = await supabase
         .from('site_settings')
         .select('*')
-        .single();
+        .maybeSingle();
 
-      if (error && error.code !== 'PGRST116') { // PGRST116 = no rows returned
+      if (error) {
         throw error;
       }
 
@@ -70,7 +70,7 @@ const SiteSettings = () => {
       const { data: existingData } = await supabase
         .from('site_settings')
         .select('id')
-        .single();
+        .maybeSingle();
 
       if (existingData) {
         // Update existing settings

@@ -141,6 +141,8 @@ export type Database = {
       }
       countries: {
         Row: {
+          acceptance_rate: number | null
+          capital: string | null
           created_at: string | null
           description_ar: string | null
           description_en: string | null
@@ -148,13 +150,17 @@ export type Database = {
           flag_emoji: string | null
           id: string
           image_url: string | null
+          living_cost: number | null
           name_ar: string
           name_en: string
+          population: number | null
           students_count: string | null
           universities_count: number | null
           updated_at: string | null
         }
         Insert: {
+          acceptance_rate?: number | null
+          capital?: string | null
           created_at?: string | null
           description_ar?: string | null
           description_en?: string | null
@@ -162,13 +168,17 @@ export type Database = {
           flag_emoji?: string | null
           id?: string
           image_url?: string | null
+          living_cost?: number | null
           name_ar: string
           name_en: string
+          population?: number | null
           students_count?: string | null
           universities_count?: number | null
           updated_at?: string | null
         }
         Update: {
+          acceptance_rate?: number | null
+          capital?: string | null
           created_at?: string | null
           description_ar?: string | null
           description_en?: string | null
@@ -176,8 +186,10 @@ export type Database = {
           flag_emoji?: string | null
           id?: string
           image_url?: string | null
+          living_cost?: number | null
           name_ar?: string
           name_en?: string
+          population?: number | null
           students_count?: string | null
           universities_count?: number | null
           updated_at?: string | null
@@ -278,28 +290,49 @@ export type Database = {
       }
       site_settings: {
         Row: {
-          created_at: string | null
+          about_description: string | null
+          accent_color: string | null
+          address: string | null
+          created_at: string
+          email: string | null
           id: string
-          key: string
-          updated_at: string | null
-          value_ar: string | null
-          value_en: string | null
+          phone: string | null
+          primary_color: string | null
+          secondary_color: string | null
+          site_logo: string | null
+          site_name: string | null
+          updated_at: string
+          whatsapp: string | null
         }
         Insert: {
-          created_at?: string | null
+          about_description?: string | null
+          accent_color?: string | null
+          address?: string | null
+          created_at?: string
+          email?: string | null
           id?: string
-          key: string
-          updated_at?: string | null
-          value_ar?: string | null
-          value_en?: string | null
+          phone?: string | null
+          primary_color?: string | null
+          secondary_color?: string | null
+          site_logo?: string | null
+          site_name?: string | null
+          updated_at?: string
+          whatsapp?: string | null
         }
         Update: {
-          created_at?: string | null
+          about_description?: string | null
+          accent_color?: string | null
+          address?: string | null
+          created_at?: string
+          email?: string | null
           id?: string
-          key?: string
-          updated_at?: string | null
-          value_ar?: string | null
-          value_en?: string | null
+          phone?: string | null
+          primary_color?: string | null
+          secondary_color?: string | null
+          site_logo?: string | null
+          site_name?: string | null
+          updated_at?: string
+          whatsapp?: string | null
         }
         Relationships: []
       }
@@ -317,6 +350,7 @@ export type Database = {
           ranking: number | null
           students_count: string | null
           updated_at: string | null
+          website: string | null
           website_url: string | null
         }
         Insert: {
@@ -332,6 +366,7 @@ export type Database = {
           ranking?: number | null
           students_count?: string | null
           updated_at?: string | null
+          website?: string | null
           website_url?: string | null
         }
         Update: {
@@ -347,6 +382,7 @@ export type Database = {
           ranking?: number | null
           students_count?: string | null
           updated_at?: string | null
+          website?: string | null
           website_url?: string | null
         }
         Relationships: [

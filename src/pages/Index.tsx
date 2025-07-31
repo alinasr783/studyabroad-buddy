@@ -99,15 +99,14 @@ const Index = () => {
       // Fetch site settings
       const { data: settings } = await supabase
         .from('site_settings')
-        .select('*')
-        .in('key', ['site_name', 'hero_title', 'hero_subtitle']);
+        .select('site_name')
+        .maybeSingle();
 
-      if (settings && settings.length > 0) {
-        const settingsObj = settings.reduce((acc, setting) => {
-          acc[setting.key] = setting.value_ar || setting.value_en;
-          return acc;
-        }, {});
-        setSiteSettings(prev => ({ ...prev, ...settingsObj }));
+      if (settings) {
+        setSiteSettings(prev => ({ 
+          ...prev, 
+          site_name: settings.site_name || 'StudyWay'
+        }));
       }
 
       // Fetch featured content

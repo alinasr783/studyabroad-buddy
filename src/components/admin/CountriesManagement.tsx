@@ -15,11 +15,13 @@ interface Country {
   description_en: string;
   description_ar: string;
   image_url: string;
-  capital: string;
-  population: number;
-  acceptance_rate: number;
-  living_cost: number;
+  capital: string | null;
+  population: number | null;
+  acceptance_rate: number | null;
+  living_cost: number | null;
   featured: boolean;
+  universities_count: number | null;
+  students_count: string | null;
 }
 
 const CountriesManagement = () => {
@@ -160,10 +162,10 @@ const CountriesManagement = () => {
       description_en: country.description_en,
       description_ar: country.description_ar,
       image_url: country.image_url,
-      capital: country.capital,
-      population: country.population,
-      acceptance_rate: country.acceptance_rate,
-      living_cost: country.living_cost,
+      capital: country.capital || "",
+      population: country.population || 0,
+      acceptance_rate: country.acceptance_rate || 0,
+      living_cost: country.living_cost || 0,
       featured: country.featured
     });
     setShowDialog(true);
@@ -325,10 +327,10 @@ const CountriesManagement = () => {
               <img src={country.image_url} alt={country.name_ar} className="w-full h-32 object-cover rounded mb-2" />
               <p className="text-sm mb-2">{country.description_ar.substring(0, 100)}...</p>
               <div className="text-xs text-muted-foreground space-y-1">
-                <p>العاصمة: {country.capital}</p>
-                <p>عدد السكان: {country.population.toLocaleString()}</p>
-                <p>نسبة القبول: {country.acceptance_rate}%</p>
-                <p>تكلفة المعيشة: ${country.living_cost.toLocaleString()}</p>
+                <p>العاصمة: {country.capital || 'غير محدد'}</p>
+                <p>عدد السكان: {country.population ? country.population.toLocaleString() : 'غير محدد'}</p>
+                <p>نسبة القبول: {country.acceptance_rate ? `${country.acceptance_rate}%` : 'غير محدد'}</p>
+                <p>تكلفة المعيشة: {country.living_cost ? `$${country.living_cost.toLocaleString()}` : 'غير محدد'}</p>
               </div>
             </CardContent>
           </Card>
