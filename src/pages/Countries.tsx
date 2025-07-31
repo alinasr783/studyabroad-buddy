@@ -3,6 +3,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
+import usaLandmark from "@/assets/usa-landmark.jpg";
+import canadaLandmark from "@/assets/canada-landmark.jpg";
+import ukLandmark from "@/assets/uk-landmark.jpg";
+import russiaLandmark from "@/assets/russia-landmark.jpg";
+import kyrgyzstanLandmark from "@/assets/kyrgyzstan-landmark.jpg";
+import uzbekistanLandmark from "@/assets/uzbekistan-landmark.jpg";
 
 interface Country {
   id: string;
@@ -21,6 +27,24 @@ const Countries = () => {
   const [countries, setCountries] = useState<Country[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  const getCountryImage = (countryName: string) => {
+    const imageMap = {
+      'United States': usaLandmark,
+      'الولايات المتحدة': usaLandmark,
+      'Canada': canadaLandmark,
+      'كندا': canadaLandmark,
+      'United Kingdom': ukLandmark,
+      'المملكة المتحدة': ukLandmark,
+      'Russia': russiaLandmark,
+      'روسيا': russiaLandmark,
+      'Kyrgyzstan': kyrgyzstanLandmark,
+      'قيرغيزستان': kyrgyzstanLandmark,
+      'Uzbekistan': uzbekistanLandmark,
+      'أوزبكستان': uzbekistanLandmark,
+    };
+    return imageMap[countryName] || usaLandmark;
+  };
 
   useEffect(() => {
     fetchCountries();
@@ -71,17 +95,11 @@ const Countries = () => {
           >
             <CardHeader className="p-0">
               <div className="relative h-48 w-full overflow-hidden rounded-t-lg">
-                {country.image_url ? (
-                  <img 
-                    src={country.image_url} 
-                    alt={country.name_ar}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-muted flex items-center justify-center">
-                    <span className="text-6xl">{country.flag_emoji || "🏛️"}</span>
-                  </div>
-                )}
+                <img 
+                  src={country.image_url || getCountryImage(country.name_en) || getCountryImage(country.name_ar)} 
+                  alt={country.name_ar}
+                  className="w-full h-full object-cover"
+                />
                 {country.featured && (
                   <Badge className="absolute top-2 right-2" variant="default">
                     مميز
@@ -90,9 +108,8 @@ const Countries = () => {
               </div>
             </CardHeader>
             <CardContent className="p-4">
-              <CardTitle className="text-xl mb-2 flex items-center gap-2">
-                <span>{country.flag_emoji}</span>
-                <span>{country.name_ar}</span>
+              <CardTitle className="text-xl mb-2">
+                {country.name_ar}
               </CardTitle>
               <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
                 {country.description_ar}

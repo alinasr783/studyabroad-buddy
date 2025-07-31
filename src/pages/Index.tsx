@@ -6,6 +6,22 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import heroBg from "@/assets/hero-bg.jpg";
+import usaLandmark from "@/assets/usa-landmark.jpg";
+import canadaLandmark from "@/assets/canada-landmark.jpg";
+import ukLandmark from "@/assets/uk-landmark.jpg";
+import russiaLandmark from "@/assets/russia-landmark.jpg";
+import kyrgyzstanLandmark from "@/assets/kyrgyzstan-landmark.jpg";
+import uzbekistanLandmark from "@/assets/uzbekistan-landmark.jpg";
+import harvardUniversity from "@/assets/harvard-university.jpg";
+import torontoUniversity from "@/assets/toronto-university.jpg";
+import oxfordUniversity from "@/assets/oxford-university.jpg";
+import computerScience from "@/assets/computer-science.jpg";
+import businessAdmin from "@/assets/business-admin.jpg";
+import medicine from "@/assets/medicine.jpg";
+import articleStudyDestinations from "@/assets/article-study-destinations.jpg";
+import articleStudentVisa from "@/assets/article-student-visa.jpg";
+import articleScholarships from "@/assets/article-scholarships.jpg";
 
 const Index = () => {
   const [featuredCountries, setFeaturedCountries] = useState([]);
@@ -18,6 +34,61 @@ const Index = () => {
     hero_subtitle: "اكتشف أفضل الجامعات والبرامج الدراسية حول العالم"
   });
   const navigate = useNavigate();
+
+  // Helper function to get default images
+  const getCountryImage = (countryName: string) => {
+    const imageMap = {
+      'United States': usaLandmark,
+      'الولايات المتحدة': usaLandmark,
+      'Canada': canadaLandmark,
+      'كندا': canadaLandmark,
+      'United Kingdom': ukLandmark,
+      'المملكة المتحدة': ukLandmark,
+      'Russia': russiaLandmark,
+      'روسيا': russiaLandmark,
+      'Kyrgyzstan': kyrgyzstanLandmark,
+      'قيرغيزستان': kyrgyzstanLandmark,
+      'Uzbekistan': uzbekistanLandmark,
+      'أوزبكستان': uzbekistanLandmark,
+    };
+    return imageMap[countryName] || null;
+  };
+
+  const getUniversityImage = (universityName: string) => {
+    const imageMap = {
+      'Harvard University': harvardUniversity,
+      'جامعة هارفارد': harvardUniversity,
+      'University of Toronto': torontoUniversity,
+      'جامعة تورونتو': torontoUniversity,
+      'University of Oxford': oxfordUniversity,
+      'جامعة أكسفورد': oxfordUniversity,
+    };
+    return imageMap[universityName] || null;
+  };
+
+  const getProgramImage = (programName: string) => {
+    const imageMap = {
+      'Computer Science': computerScience,
+      'علوم الحاسب': computerScience,
+      'Business Administration': businessAdmin,
+      'إدارة الأعمال': businessAdmin,
+      'Medicine': medicine,
+      'الطب': medicine,
+    };
+    return imageMap[programName] || null;
+  };
+
+  const getArticleImage = (articleTitle: string) => {
+    const imageMap = {
+      'Top 10 Study Destinations for 2024': articleStudyDestinations,
+      'أفضل 10 وجهات دراسية لعام 2024': articleStudyDestinations,
+      'How to Get a Student Visa': articleStudentVisa,
+      'كيفية الحصول على فيزا طالب': articleStudentVisa,
+      'Scholarship Opportunities': articleScholarships,
+      'فرص المنح الدراسية': articleScholarships,
+    };
+    return imageMap[articleTitle] || null;
+  };
 
   useEffect(() => {
     fetchHomeData();
@@ -61,19 +132,27 @@ const Index = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
+      <section 
+        className="relative min-h-[80vh] flex items-center justify-center text-white py-20"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)), url(${heroBg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 drop-shadow-lg">
             {siteSettings.hero_title}
           </h1>
-          <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
+          <p className="text-xl md:text-3xl mb-8 max-w-3xl mx-auto drop-shadow-lg">
             {siteSettings.hero_subtitle}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" onClick={() => navigate('/universities')}>
+            <Button size="lg" className="bg-white text-primary hover:bg-white/90" onClick={() => navigate('/universities')}>
               استكشف الجامعات
             </Button>
-            <Button size="lg" variant="outline" onClick={() => navigate('/contact')}>
+            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary" onClick={() => navigate('/contact')}>
               احجز استشارة
             </Button>
           </div>
@@ -97,19 +176,16 @@ const Index = () => {
                 >
                   <CardHeader className="p-0">
                     <div className="h-48 w-full overflow-hidden rounded-t-lg">
-                      {country.image_url ? (
-                        <img src={country.image_url} alt={country.name_ar} className="w-full h-full object-cover" />
-                      ) : (
-                        <div className="w-full h-full bg-muted flex items-center justify-center">
-                          <span className="text-6xl">{country.flag_emoji || "🏛️"}</span>
-                        </div>
-                      )}
+                      <img 
+                        src={country.image_url || getCountryImage(country.name_en) || getCountryImage(country.name_ar)} 
+                        alt={country.name_ar} 
+                        className="w-full h-full object-cover" 
+                      />
                     </div>
                   </CardHeader>
                   <CardContent className="p-4">
-                    <CardTitle className="flex items-center gap-2 mb-2">
-                      <span>{country.flag_emoji}</span>
-                      <span>{country.name_ar}</span>
+                    <CardTitle className="mb-2">
+                      {country.name_ar}
                     </CardTitle>
                     <p className="text-muted-foreground text-sm line-clamp-2">
                       {country.description_ar}
@@ -144,13 +220,11 @@ const Index = () => {
                 >
                   <CardHeader className="p-0">
                     <div className="h-48 w-full overflow-hidden rounded-t-lg">
-                      {university.image_url ? (
-                        <img src={university.image_url} alt={university.name_ar} className="w-full h-full object-cover" />
-                      ) : (
-                        <div className="w-full h-full bg-muted flex items-center justify-center">
-                          <span className="text-4xl">🏛️</span>
-                        </div>
-                      )}
+                      <img 
+                        src={university.image_url || getUniversityImage(university.name_en) || getUniversityImage(university.name_ar)} 
+                        alt={university.name_ar} 
+                        className="w-full h-full object-cover" 
+                      />
                     </div>
                   </CardHeader>
                   <CardContent className="p-4">
@@ -188,13 +262,11 @@ const Index = () => {
                 >
                   <CardHeader className="p-0">
                     <div className="h-48 w-full overflow-hidden rounded-t-lg">
-                      {program.image_url ? (
-                        <img src={program.image_url} alt={program.name_ar} className="w-full h-full object-cover" />
-                      ) : (
-                        <div className="w-full h-full bg-muted flex items-center justify-center">
-                          <span className="text-4xl">📚</span>
-                        </div>
-                      )}
+                      <img 
+                        src={program.image_url || getProgramImage(program.name_en) || getProgramImage(program.name_ar)} 
+                        alt={program.name_ar} 
+                        className="w-full h-full object-cover" 
+                      />
                     </div>
                   </CardHeader>
                   <CardContent className="p-4">
@@ -232,13 +304,11 @@ const Index = () => {
                 >
                   <CardHeader className="p-0">
                     <div className="h-48 w-full overflow-hidden rounded-t-lg">
-                      {article.image_url ? (
-                        <img src={article.image_url} alt={article.title_ar} className="w-full h-full object-cover" />
-                      ) : (
-                        <div className="w-full h-full bg-muted flex items-center justify-center">
-                          <span className="text-4xl">📰</span>
-                        </div>
-                      )}
+                      <img 
+                        src={article.image_url || getArticleImage(article.title_en) || getArticleImage(article.title_ar)} 
+                        alt={article.title_ar} 
+                        className="w-full h-full object-cover" 
+                      />
                     </div>
                   </CardHeader>
                   <CardContent className="p-4">

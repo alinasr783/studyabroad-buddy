@@ -3,6 +3,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
+import computerScience from "@/assets/computer-science.jpg";
+import businessAdmin from "@/assets/business-admin.jpg";
+import medicine from "@/assets/medicine.jpg";
 
 interface Program {
   id: string;
@@ -23,6 +26,18 @@ const Programs = () => {
   const [programs, setPrograms] = useState<Program[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  const getProgramImage = (programName: string) => {
+    const imageMap = {
+      'Computer Science': computerScience,
+      'علوم الحاسب': computerScience,
+      'Business Administration': businessAdmin,
+      'إدارة الأعمال': businessAdmin,
+      'Medicine': medicine,
+      'الطب': medicine,
+    };
+    return imageMap[programName] || computerScience;
+  };
 
   useEffect(() => {
     fetchPrograms();
@@ -73,17 +88,11 @@ const Programs = () => {
           >
             <CardHeader className="p-0">
               <div className="relative h-48 w-full overflow-hidden rounded-t-lg">
-                {program.image_url ? (
-                  <img 
-                    src={program.image_url} 
-                    alt={program.name_ar}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-muted flex items-center justify-center">
-                    <span className="text-4xl">📚</span>
-                  </div>
-                )}
+                <img 
+                  src={program.image_url || getProgramImage(program.name_en) || getProgramImage(program.name_ar)} 
+                  alt={program.name_ar}
+                  className="w-full h-full object-cover"
+                />
                 {program.featured && (
                   <Badge className="absolute top-2 right-2" variant="default">
                     مميز

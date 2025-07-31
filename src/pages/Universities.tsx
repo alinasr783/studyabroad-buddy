@@ -3,6 +3,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
+import harvardUniversity from "@/assets/harvard-university.jpg";
+import torontoUniversity from "@/assets/toronto-university.jpg";
+import oxfordUniversity from "@/assets/oxford-university.jpg";
 
 interface University {
   id: string;
@@ -22,6 +25,18 @@ const Universities = () => {
   const [universities, setUniversities] = useState<University[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  const getUniversityImage = (universityName: string) => {
+    const imageMap = {
+      'Harvard University': harvardUniversity,
+      'جامعة هارفارد': harvardUniversity,
+      'University of Toronto': torontoUniversity,
+      'جامعة تورونتو': torontoUniversity,
+      'University of Oxford': oxfordUniversity,
+      'جامعة أكسفورد': oxfordUniversity,
+    };
+    return imageMap[universityName] || harvardUniversity;
+  };
 
   useEffect(() => {
     fetchUniversities();
@@ -72,17 +87,11 @@ const Universities = () => {
           >
             <CardHeader className="p-0">
               <div className="relative h-48 w-full overflow-hidden rounded-t-lg">
-                {university.image_url ? (
-                  <img 
-                    src={university.image_url} 
-                    alt={university.name_ar}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-muted flex items-center justify-center">
-                    <span className="text-4xl">🏛️</span>
-                  </div>
-                )}
+                <img 
+                  src={university.image_url || getUniversityImage(university.name_en) || getUniversityImage(university.name_ar)} 
+                  alt={university.name_ar}
+                  className="w-full h-full object-cover"
+                />
                 {university.featured && (
                   <Badge className="absolute top-2 right-2" variant="default">
                     مميز
