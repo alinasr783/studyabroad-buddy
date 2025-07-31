@@ -24,6 +24,7 @@ import CountriesManagement from "@/components/admin/CountriesManagement";
 import UniversitiesManagement from "@/components/admin/UniversitiesManagement";
 import ProgramsManagement from "@/components/admin/ProgramsManagement";
 import ArticlesManagement from "@/components/admin/ArticlesManagement";
+import ApplicationsManagement from "@/components/admin/ApplicationsManagement";
 import SiteSettings from "@/components/admin/SiteSettings";
 
 interface DashboardStats {

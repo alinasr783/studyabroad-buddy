@@ -6,7 +6,8 @@ const About = () => {
     title: "من نحن",
     description: "نحن منصة رائدة لمساعدة الطلاب في الحصول على فرص الدراسة في أفضل الجامعات العالمية",
     mission: "مساعدة الطلاب العرب في تحقيق أحلامهم الأكاديمية",
-    vision: "أن نكون الجسر الذي يربط بين الطلاب وأفضل الجامعات العالمية"
+    vision: "أن نكون الجسر الذي يربط بين الطلاب وأفضل الجامعات العالمية",
+    about_image: ""
   });
 
   useEffect(() => {
@@ -17,7 +18,7 @@ const About = () => {
     try {
       const { data, error } = await supabase
         .from('site_settings')
-        .select('about_description')
+        .select('about_description, about_image')
         .maybeSingle();
 
       if (error) throw error;
@@ -27,7 +28,8 @@ const About = () => {
           title: "من نحن",
           description: data.about_description || content.description,
           mission: content.mission,
-          vision: content.vision
+          vision: content.vision,
+          about_image: data.about_image || ""
         });
       }
     } catch (error) {
@@ -38,6 +40,16 @@ const About = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">
+        {content.about_image && (
+          <div className="mb-8 rounded-lg overflow-hidden">
+            <img 
+              src={content.about_image} 
+              alt="حولنا" 
+              className="w-full h-64 object-cover"
+            />
+          </div>
+        )}
+        
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-6">{content.title}</h1>
           <p className="text-xl text-muted-foreground leading-relaxed">

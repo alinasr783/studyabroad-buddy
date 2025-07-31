@@ -12,6 +12,7 @@ interface ContactInfo {
   email?: string;
   address?: string;
   whatsapp?: string;
+  contact_image?: string;
 }
 
 const Contact = () => {
@@ -33,7 +34,7 @@ const Contact = () => {
     try {
       const { data, error } = await supabase
         .from('site_settings')
-        .select('phone, email, address, whatsapp')
+        .select('phone, email, address, whatsapp, contact_image')
         .maybeSingle();
 
       if (error) throw error;
@@ -43,7 +44,8 @@ const Contact = () => {
           phone: data.phone || '',
           email: data.email || '',
           address: data.address || '',
-          whatsapp: data.whatsapp || ''
+          whatsapp: data.whatsapp || '',
+          contact_image: data.contact_image || ''
         });
       }
     } catch (error) {
@@ -97,6 +99,16 @@ const Contact = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-6xl mx-auto">
+        {contactInfo.contact_image && (
+          <div className="mb-8 rounded-lg overflow-hidden">
+            <img 
+              src={contactInfo.contact_image} 
+              alt="تواصل معنا" 
+              className="w-full h-64 object-cover"
+            />
+          </div>
+        )}
+        
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">تواصل معنا</h1>
           <p className="text-xl text-muted-foreground">نحن هنا لمساعدتك في رحلة الدراسة في الخارج</p>

@@ -31,7 +31,8 @@ const Index = () => {
   const [siteSettings, setSiteSettings] = useState({
     site_name: "StudyWay",
     hero_title: "ابدأ رحلتك التعليمية",
-    hero_subtitle: "اكتشف أفضل الجامعات والبرامج الدراسية حول العالم"
+    hero_subtitle: "اكتشف أفضل الجامعات والبرامج الدراسية حول العالم",
+    hero_image: heroBg
   });
   const navigate = useNavigate();
 
@@ -99,13 +100,14 @@ const Index = () => {
       // Fetch site settings
       const { data: settings } = await supabase
         .from('site_settings')
-        .select('site_name')
+        .select('site_name, hero_image')
         .maybeSingle();
 
       if (settings) {
         setSiteSettings(prev => ({ 
           ...prev, 
-          site_name: settings.site_name || 'StudyWay'
+          site_name: settings.site_name || 'StudyWay',
+          hero_image: settings.hero_image || heroBg
         }));
       }
 
@@ -134,7 +136,7 @@ const Index = () => {
       <section 
         className="relative min-h-[80vh] flex items-center justify-center text-white py-20"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)), url(${heroBg})`,
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)), url(${siteSettings.hero_image})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
